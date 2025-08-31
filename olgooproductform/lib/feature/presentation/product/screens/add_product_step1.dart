@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,22 +12,21 @@ import 'package:olgooproductform/core/widgets/primary_textbox.dart';
 import 'package:olgooproductform/core/widgets/textfield_maxline.widget.dart';
 import 'package:olgooproductform/feature/domain/product/entity/product_entity.dart';
 import 'package:olgooproductform/feature/presentation/product/widgets/image_picker.dart';
-import 'package:olgooproductform/feature/presentation/product/widgets/primary_avatar.dart';
 import 'package:size_config/size_config.dart';
 
-class SignupStep3Product extends StatefulWidget {
- const SignupStep3Product({super.key});
+class AddProductStep1 extends StatefulWidget {
+ const AddProductStep1({super.key});
 
   @override
-  State<SignupStep3Product> createState() => _SignupStep3ProductState();
+  State<AddProductStep1> createState() => _AddProductStep1State();
 }
 
-class _SignupStep3ProductState extends State<SignupStep3Product> {
-  TextEditingController nameProductController = TextEditingController();
+class _AddProductStep1State extends State<AddProductStep1> {
+  TextEditingController titleProductController = TextEditingController();
 
-  TextEditingController ProductController = TextEditingController();
+  TextEditingController descriptionProductController = TextEditingController();
  ImageHandler imageHandler = ImageHandler();
-
+XFile? _selectedImage; 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +57,7 @@ class _SignupStep3ProductState extends State<SignupStep3Product> {
           (MediaQuery.of(context).size.height * 0.025).verticalSpace,
           //! forms ------------------------------------------------------------
           PrimaryTextBox(
-            controller: nameProductController,
+            controller: titleProductController,
             iconPath: SvgPath.leadingAdornment,
             title: "  عنوان محصول ",
             hint: "عنوان محصول رو وارد کنید",
@@ -64,7 +66,7 @@ class _SignupStep3ProductState extends State<SignupStep3Product> {
           TextFieldMaxLine(
             title: 'توضیحاتی درباره ی محصول',
             hint: 'مثلا جنسش چیه یا رنگبندی هاش چیه',
-            controller: ProductController,
+            controller: descriptionProductController,
           ),
           30.0.h.verticalSpace,
           //!image--------------------------
@@ -73,8 +75,15 @@ class _SignupStep3ProductState extends State<SignupStep3Product> {
             //                .pickAndCropImage(source: ImageSource.gallery),
                             //.then((value) => setState(() {})),
             //            file: imageHandler.getImage),
-           ImagePickerContainer(),
+           ImagePickerContainer(
+             onImageSelected: (image) {
+              setState(() {
+                _selectedImage = image;
+              });
+            },
+           ),
           //!button---------------------------------------
+           
             Spacer(),
           Align(
             alignment: Alignment.center,
@@ -82,13 +91,13 @@ class _SignupStep3ProductState extends State<SignupStep3Product> {
               isPrimaryColor: true,
               action: () {
                   final tempProduct = TempProduct(
-                title: nameProductController.text,
-                description: ProductController.text,
-                imgPath: imageHandler.getImage?.path ?? '',
+                title: titleProductController.text,
+                description: descriptionProductController.text,
+                imgPath:  _selectedImage!.path ?? '',
               );
-
+                 
               context.pushNamed(
-                '/signupstep4order',
+                "addproductstep2",
                 extra: tempProduct,
               );
               },
