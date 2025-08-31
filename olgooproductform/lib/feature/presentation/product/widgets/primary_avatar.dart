@@ -8,7 +8,7 @@ class PrimaryAvatar extends StatelessWidget {
   const PrimaryAvatar({super.key, required this.onTap, required this.file});
 
   final VoidCallback? onTap;
-  final File? file;
+  final  file;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class PrimaryAvatar extends StatelessWidget {
                     ],
                   ),
               )
-              : Image.file(file!, fit: BoxFit.cover),
+              : Image.file(file, fit: BoxFit.cover),
         ),
       ),
     );

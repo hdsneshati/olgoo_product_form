@@ -8,6 +8,7 @@ import 'package:olgooproductform/core/widgets/primary_button.dart';
 import 'package:olgooproductform/core/widgets/primary_textbox.dart';
 import 'package:olgooproductform/core/widgets/textfield_maxline.widget.dart';
 import 'package:olgooproductform/feature/domain/product/entity/product_entity.dart';
+import 'package:olgooproductform/feature/presentation/product/widgets/image_picker.dart';
 import 'package:olgooproductform/feature/presentation/product/widgets/primary_avatar.dart';
 import 'package:size_config/size_config.dart';
 
@@ -67,19 +68,14 @@ class _SignupStep3ProductState extends State<SignupStep3Product> {
           ),
           30.0.h.verticalSpace,
           //!image--------------------------
-          PrimaryAvatar(
-            onTap: () async {
-              await imageHandler
-                  .pickAndCropImage(source: ImageSource.gallery)
-                  .then((ValueKey) {
-                    setState(() {});
-                  });
-            },
-            file: imageHandler.getImage,
-          ),
+         // PrimaryAvatar(
+          //  onTap:() async => await imageHandler
+            //                .pickAndCropImage(source: ImageSource.gallery),
+                            //.then((value) => setState(() {})),
+            //            file: imageHandler.getImage),
+           ImagePickerContainer(),
           //!button---------------------------------------
-            (MediaQuery.of(context).size.height * 0.1).verticalSpace,
-          Spacer(),
+            Spacer(),
           Align(
             alignment: Alignment.center,
             child: PrimaryButton(
@@ -87,7 +83,7 @@ class _SignupStep3ProductState extends State<SignupStep3Product> {
               action: () {
                   final tempProduct = TempProduct(
                 title: nameProductController.text,
-                description: priceProductController.text,
+                description: ProductController.text,
                 imgPath: imageHandler.getImage?.path ?? '',
               );
 

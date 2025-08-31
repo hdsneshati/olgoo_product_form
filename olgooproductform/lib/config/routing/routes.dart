@@ -13,7 +13,7 @@ import 'package:olgooproductform/feature/presentation/product/screens/signup_ste
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 final GoRouter routs =
-    GoRouter(navigatorKey: navigatorKey, initialLocation: "/login", routes: [
+    GoRouter(navigatorKey: navigatorKey, initialLocation: "/signupstep3product", routes: [
  
  
  GoRoute(
