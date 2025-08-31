@@ -7,7 +7,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:olgooproductform/config/asset/svg_path.dart';
 
 class ImagePickerContainer extends StatefulWidget {
-  const ImagePickerContainer({super.key});
+   ImagePickerContainer({super.key, this.onImageSelected});
+  final ValueChanged<XFile?>? onImageSelected;
 
   @override
   State<ImagePickerContainer> createState() => _ImagePickerContainerState();
@@ -25,9 +26,10 @@ class _ImagePickerContainerState extends State<ImagePickerContainer> {
       setState(() {
         _image = pickedFile;
       });
+      widget.onImageSelected?.call(_image);
     }
   }
-
+  
   void _showPickOptionsDialog() {
     showModalBottomSheet(
       context: context,
