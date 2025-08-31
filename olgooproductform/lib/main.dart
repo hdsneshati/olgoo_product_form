@@ -9,7 +9,7 @@ import 'package:olgooproductform/core/dependency_injection/locator.dart';
 import 'package:olgooproductform/feature/presentation/authentication/bloc/auth/auth.bloc.dart';
 import 'package:olgooproductform/feature/presentation/product/bloc/product.bloc.dart';
 import 'package:olgooproductform/feature/presentation/product/screens/dashboard_screen.dart';
-import 'package:olgooproductform/feature/presentation/product/screens/signup_step4_order.dart';
+import 'package:olgooproductform/feature/presentation/product/screens/add_product_step2.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:size_config/size_config.dart';
 Future<void> main() async {
