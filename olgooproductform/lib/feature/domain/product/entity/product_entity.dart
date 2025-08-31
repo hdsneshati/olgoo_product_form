@@ -7,7 +7,8 @@ class ProductEntity {
   final String type;
   final DateTime? registerDate;
   final String imgPath;
-
+final String description;
+  
   ProductEntity({
     required this.id,
     required this.price,
@@ -15,6 +16,7 @@ class ProductEntity {
     required this.title,
     required this.status,
     required this.type,
+    required this.description,
     this.registerDate,
   });
 
@@ -23,7 +25,7 @@ class ProductEntity {
       id: json['id'],
       price: json['price'],
       title: json['title'],
-
+      description: json['description'],
       status: json['status'],
       imgPath: json['imgPath'],
       type: json['type'],
@@ -60,7 +62,8 @@ class Category {
       'id': id,
       'title': title,
       'isCustom': isCustom,
-    };
+      'title': title,
+       };
   }
 }
 class TempProduct {
@@ -77,4 +80,12 @@ class TempProduct {
     this.minOrder = 0,
     this.price = 0,
   });
+   Map<String, dynamic> toJson() {
+    return {
+      'title': title,
+      'imgPath': imgPath,
+      'price': price,
+      'description': description,
+    };
+  }
 }
