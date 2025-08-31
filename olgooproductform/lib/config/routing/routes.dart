@@ -7,13 +7,13 @@ import 'package:olgooproductform/feature/presentation/authentication/screens/otp
 import 'package:olgooproductform/feature/presentation/authentication/screens/signup.step1.screen.dart';
 import 'package:olgooproductform/feature/presentation/authentication/screens/signup_stap2_details_screen.dart';
 import 'package:olgooproductform/feature/presentation/product/screens/dashboard_screen.dart';
-import 'package:olgooproductform/feature/presentation/product/screens/signup_step3_product.dart';
-import 'package:olgooproductform/feature/presentation/product/screens/signup_step4_order.dart';
+import 'package:olgooproductform/feature/presentation/product/screens/add_product_step1.dart';
+import 'package:olgooproductform/feature/presentation/product/screens/add_product_step2.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 final GoRouter routs =
-    GoRouter(navigatorKey: navigatorKey, initialLocation: "/signupstep3product", routes: [
+    GoRouter(navigatorKey: navigatorKey, initialLocation: "/addproductstep1", routes: [
  
  
  GoRoute(
@@ -43,17 +43,17 @@ final GoRouter routs =
   ),
   
    GoRoute(
-    path: '/signupstep3product',
-    name: "/signupstep3product",
-    builder: (context, state) => SignupStep3Product(),
+    path: '/addproductstep1',
+    name: "/addproductstep1",
+    builder: (context, state) => AddProductStep1(),
   ),
    GoRoute(
-  path: '/signupstep4order',
-  name: "signupstep4order", // بدون / در نام
+  path: '/addproductstep2',
+  name: "addproductstep2", // بدون / در نام
   builder: (context, state) {
     // گرفتن اطلاعات محصول از صفحه قبل
     final TempProduct tempProduct = state.extra as TempProduct;
-    return SignupStep4Order(tempProduct: tempProduct);
+    return AddProductStep2(tempProduct: tempProduct);
   },
 ),
 
