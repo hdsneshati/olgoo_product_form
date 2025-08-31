@@ -15,7 +15,7 @@ class PrimaryTextBox extends StatefulWidget {
     this.isNumbricKeyboard = false,
     this.countText = " ",
   });
-  final TextEditingController? controller;
+  final TextEditingController controller;
   final bool isObsecure;
   final String iconPath;
   final bool? isNumbricKeyboard;
