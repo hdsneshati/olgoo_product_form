@@ -7,6 +7,7 @@ import 'package:olgooproductform/config/asset/icons_path.dart';
 import 'package:olgooproductform/config/extentions/gap_space_extension.dart';
 import 'package:olgooproductform/core/dependency_injection/locator.dart';
 import 'package:olgooproductform/core/utils/preferences_oprator.dart';
+import 'package:olgooproductform/core/widgets/empty_state.widget%20copy.dart';
 import 'package:olgooproductform/core/widgets/primary_button.dart';
 import 'package:olgooproductform/feature/presentation/product/bloc/product.bloc.dart';
 import 'package:olgooproductform/feature/presentation/product/bloc/product_status.dart';
@@ -64,7 +65,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
 
             children: [
-              //  UserInfoSection(user: preferencesOperator.getUserData()),
+                //UserInfoSection(user: preferencesOperator.getUserData()),
               Divider(color: Theme.of(context).colorScheme.outline),
               DelayedWidget(
                 animationDuration: const Duration(milliseconds: 400),
@@ -75,7 +76,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   child: PrimaryButton(
                     isPrimaryColor: true,
                     action: () {
-                      context.pushNamed('/signupstep3product');
+                      context.pushNamed('/AddProductStep1');
                     },
                     child: Text(
                       textAlign: TextAlign.center,
@@ -118,17 +119,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
                     );
                   } else if (state.status is EmptyProductStatus) {
-                    return const Center(child: Text("هیچ محصولی موجود نیست"));
+                   return EmptyState(
+                    title: 'سفارشی یافت نشد',
+                    isError: false,
+                    action: () {
+                       context.pushNamed('/AddProductStep1');
+                      
+                    },
+                  );
                   } else if (state.status is ErrorProductStatus) {
-                    return Center(
-                      child: TextButton(
-                        child: const Text("خطا! دوباره تلاش کن"),
-                        onPressed: () {
-                          BlocProvider.of<ProductBloc>(context).add(
+                     var msg = (state.status as ErrorProductStatus).msg;
+                  return EmptyState(
+                    title: msg,
+                     isError: true,
+                    action: () {
+                       BlocProvider.of<ProductBloc>(context).add(
                             LoadProductsFirstTimeEvent(type: "defaultCategory"),
-                          );
-                        },
-                      ),
+                         );
+                    }
                     );
                   } else {
                     return Container();
