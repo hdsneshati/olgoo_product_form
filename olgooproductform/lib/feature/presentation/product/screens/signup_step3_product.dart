@@ -7,7 +7,8 @@ import 'package:olgooproductform/core/utils/image_handler.dart';
 import 'package:olgooproductform/core/widgets/primary_button.dart';
 import 'package:olgooproductform/core/widgets/primary_textbox.dart';
 import 'package:olgooproductform/core/widgets/textfield_maxline.widget.dart';
-import 'package:olgooproductform/feature/presentation/dashboard/widgets/primary_avatar.dart';
+import 'package:olgooproductform/feature/domain/product/entity/product_entity.dart';
+import 'package:olgooproductform/feature/presentation/product/widgets/primary_avatar.dart';
 import 'package:size_config/size_config.dart';
 
 class SignupStep3Product extends StatefulWidget {
@@ -84,7 +85,16 @@ class _SignupStep3ProductState extends State<SignupStep3Product> {
             child: PrimaryButton(
               isPrimaryColor: true,
               action: () {
-                context.pushNamed('/signupstep4order');
+                  final tempProduct = TempProduct(
+                title: nameProductController.text,
+                description: priceProductController.text,
+                imgPath: imageHandler.getImage?.path ?? '',
+              );
+
+              context.pushNamed(
+                '/signupstep4order',
+                extra: tempProduct,
+              );
               },
               child: Text(
                 "ادامه ",

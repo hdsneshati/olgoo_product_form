@@ -6,8 +6,10 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:olgooproductform/config/asset/theme/theme_data.dart';
 import 'package:olgooproductform/config/routing/routes.dart';
 import 'package:olgooproductform/core/dependency_injection/locator.dart';
-import 'package:olgooproductform/feature/presentation/dashboard/screens/dashboard_screen.dart';
-import 'package:olgooproductform/feature/presentation/dashboard/screens/signup_step4_order.dart';
+import 'package:olgooproductform/feature/presentation/authentication/bloc/auth/auth.bloc.dart';
+import 'package:olgooproductform/feature/presentation/product/bloc/product.bloc.dart';
+import 'package:olgooproductform/feature/presentation/product/screens/dashboard_screen.dart';
+import 'package:olgooproductform/feature/presentation/product/screens/signup_step4_order.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:size_config/size_config.dart';
 Future<void> main() async {
@@ -19,11 +21,13 @@ Future<void> main() async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   runApp(
-    //MultiBlocProvider(
-    //  providers: [BlocProvider(create: (context) => AuthBloc(locator()))],
-     // child:
+    MultiBlocProvider(
+      providers: [
+      BlocProvider(create: (context) => AuthBloc(locator())),
+      BlocProvider(create: (context) => ProductBloc(locator()))],
+      child:
        const MyApp(),
-   // ),
+    ),
   );
 }
 

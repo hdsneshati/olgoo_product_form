@@ -1,13 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:olgooproductform/config/asset/svg_path.dart';
 import 'package:olgooproductform/config/extentions/gap_space_extension.dart';
 import 'package:olgooproductform/core/widgets/primary_button.dart';
 import 'package:olgooproductform/core/widgets/primary_textbox.dart';
+import 'package:olgooproductform/feature/domain/product/entity/product_entity.dart';
 
-class SignupStep4Order extends StatelessWidget {
-   SignupStep4Order({super.key});
-  TextEditingController nameProductController = TextEditingController();
+class SignupStep4Order extends StatefulWidget {
+   final TempProduct tempProduct;
+   SignupStep4Order({super.key, required this.tempProduct});
+
+  @override
+  State<SignupStep4Order> createState() => _SignupStep4OrderState();
+}
+
+class _SignupStep4OrderState extends State<SignupStep4Order> {
+ TextEditingController nameProductController = TextEditingController();
+
   TextEditingController priceProductController = TextEditingController();
+
+ late TextEditingController minOrderController;
+
+  late TextEditingController priceController;
+
+  @override
+  void initState() {
+    super.initState();
+    // مقادیر اولیه رو از TempProduct بگیر
+    minOrderController =
+        TextEditingController(text: widget.tempProduct.minOrder?.toString() ?? '');
+    priceController =
+        TextEditingController(text: widget.tempProduct.price?.toString() ?? '');
+  }
+
+  @override
+  void dispose() {
+    minOrderController.dispose();
+    priceController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +92,9 @@ class SignupStep4Order extends StatelessWidget {
             alignment: Alignment.center,
             child: PrimaryButton(
               isPrimaryColor: true,
-              action: () {},
+              action: (dynamic imageHandler) {
+               
+              },
               child: Text(
                 "ادامه ",
                 style: Theme.of(context).textTheme.labelLarge,
