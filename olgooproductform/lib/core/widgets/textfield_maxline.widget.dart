@@ -12,7 +12,7 @@ class TextFieldMaxLine extends StatefulWidget {
     required this.hint,
     
   });
-  final TextEditingController? controller;
+  final TextEditingController controller;
   
   final String title;
   final String hint;
