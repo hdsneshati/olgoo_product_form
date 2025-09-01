@@ -19,8 +19,10 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       (event, emit) async {
         emit(ProductState(LoadingProductStatus(), 0, [], true));
         String? type = event.type == "همه" ? null : event.type;
+       
         DataState data =
             await useCases.getAllProducts(take: pageSize, skip: 0, type: type);
+        print(data);
         if (data is SuccessData) {
           if (data.data.isEmpty) {
             emit(state.copyWith(newStatus: EmptyProductStatus()));

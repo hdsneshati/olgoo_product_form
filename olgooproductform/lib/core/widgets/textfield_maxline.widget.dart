@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:olgooproductform/config/asset/theme/color_pallet.dart';
+import 'package:olgooproductform/config/theme/color_pallet.dart';
 
 
      
@@ -50,9 +50,9 @@ class _TextFieldMaxLineState extends State<TextFieldMaxLine> {
                 keyboardType: TextInputType.text,
                 style: TextStyle(
                     fontFamily: "dana",
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Theme.of(context).colorScheme.surfaceBright),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    color:Color(0xff000000)),
              //   obscureText: widget.isObsecure,
                 controller: widget.controller,
                 decoration: InputDecoration(

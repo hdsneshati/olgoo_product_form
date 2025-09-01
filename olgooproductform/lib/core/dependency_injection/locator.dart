@@ -26,12 +26,19 @@ locatorSetup() async {
   //! repositoreis--------------------------------------------------------------
   locator.registerSingleton<AuthRepositoryIMPL>(
       AuthRepositoryIMPL(apiProvider: locator()));
-   locator.registerSingleton<ProductRepositoryIMPL>(ProductRepositoryIMPL());
+  // locator.registerSingleton<ProductRepositoryIMPL>(ProductRepositoryIMPL());
+locator.registerSingleton<ProductRepositoryIMPL>(
+    ProductRepositoryIMPL(apiProvider: locator<ProductApiProvider>()));
+
 
   //!usecase--------------------------------------------------------------------
   locator.registerSingleton<AuthUseCases>(AuthUseCases(locator()));
-   locator.registerSingleton<ProductUseCase>(ProductUseCase());
+   //locator.registerSingleton<ProductUseCase>(ProductUseCase());
+locator.registerSingleton<ProductUseCase>(
+    ProductUseCase(productRepository: locator<ProductRepositoryIMPL>()));
 
+
+  
 }
 
 

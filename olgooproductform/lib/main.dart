@@ -3,13 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localisation/flutter_localisation.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:olgooproductform/config/asset/theme/theme_data.dart';
 import 'package:olgooproductform/config/routing/routes.dart';
+import 'package:olgooproductform/config/theme/theme_data.dart';
 import 'package:olgooproductform/core/dependency_injection/locator.dart';
 import 'package:olgooproductform/feature/presentation/authentication/bloc/auth/auth.bloc.dart';
+import 'package:olgooproductform/feature/presentation/authentication/screens/signup.step1.screen.dart';
+import 'package:olgooproductform/feature/presentation/authentication/screens/signup_stap2_details_screen.dart';
 import 'package:olgooproductform/feature/presentation/product/bloc/product.bloc.dart';
-import 'package:olgooproductform/feature/presentation/product/screens/dashboard_screen.dart';
-import 'package:olgooproductform/feature/presentation/product/screens/add_product_step2.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:size_config/size_config.dart';
 Future<void> main() async {
@@ -43,13 +43,13 @@ class MyApp extends StatelessWidget {
         return MaterialApp.router(
           routerConfig: routs,
           title: 'OLGOO',
-          theme: lightThemeData,
+         // theme: lightThemeData,
           locale: const Locale("fa", "IR"),
           supportedLocales: const [
             Locale("fa", "IR"),
             // Locale('en', 'US'),
           ],
-         //home: DashboardScreen(),
+        // home: SignupDetailsScreen(),
           debugShowCheckedModeBanner: false,
           localizationsDelegates: const [
             PersianMaterialLocalizations.delegate,

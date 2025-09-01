@@ -1,5 +1,5 @@
 class ApiConstants {
-  static const String domainName = "https://api2.olgooapp.ir/";
+  static const String domainName = "https://api2-dev.olgooapp.ir/";
   static const String login = "otp/"; //send phone number as param
   static const String signup = "user";
   static const String verfiyOtp =

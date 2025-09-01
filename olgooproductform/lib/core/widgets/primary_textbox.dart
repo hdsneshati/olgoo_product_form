@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:olgooproductform/config/asset/theme/color_pallet.dart';
+import 'package:olgooproductform/config/theme/color_pallet.dart';
 import 'package:persian_number_utility/persian_number_utility.dart';
 import 'package:size_config/size_config.dart';
 

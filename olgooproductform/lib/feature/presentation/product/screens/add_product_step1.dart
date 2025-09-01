@@ -31,85 +31,87 @@ XFile? _selectedImage;
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-      
-        children: [
-          (MediaQuery.of(context).size.height * 0.06).verticalSpace,
-          Padding(
-            padding: const EdgeInsets.only(right: 20),
-            //! app bar ------------------------------------------------------
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  ' بیشتر راجب خودتون بگید  ',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                (MediaQuery.of(context).size.height * 0.013).verticalSpace,
-                Text(
-                  'یک حساب کاربری بسازید و شروع کنید',
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              ],
-            ),
-          ),
-          (MediaQuery.of(context).size.height * 0.025).verticalSpace,
-          //! forms ------------------------------------------------------------
-          PrimaryTextBox(
-            controller: titleProductController,
-            iconPath: SvgPath.leadingAdornment,
-            title: "  عنوان محصول ",
-            hint: "عنوان محصول رو وارد کنید",
-          ),
-          8.0.verticalSpace,
-          TextFieldMaxLine(
-            title: 'توضیحاتی درباره ی محصول',
-            hint: 'مثلا جنسش چیه یا رنگبندی هاش چیه',
-            controller: descriptionProductController,
-          ),
-          30.0.h.verticalSpace,
-          //!image--------------------------
-         // PrimaryAvatar(
-          //  onTap:() async => await imageHandler
-            //                .pickAndCropImage(source: ImageSource.gallery),
-                            //.then((value) => setState(() {})),
-            //            file: imageHandler.getImage),
-           ImagePickerContainer(
-             onImageSelected: (image) {
-              setState(() {
-                _selectedImage = image;
-              });
-            },
-           ),
-          //!button---------------------------------------
-           
-            Spacer(),
-          Align(
-            alignment: Alignment.center,
-            child: PrimaryButton(
-              isPrimaryColor: true,
-              action: () {
-                  final tempProduct = TempProduct(
-                title: titleProductController.text,
-                description: descriptionProductController.text,
-                imgPath:  _selectedImage!.path ?? '',
-              );
-                 
-              context.pushNamed(
-                "addproductstep2",
-                extra: tempProduct,
-              );
-              },
-              child: Text(
-                "ادامه ",
-                style: Theme.of(context).textTheme.labelLarge,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+        
+          children: [
+            (MediaQuery.of(context).size.height * 0.06).verticalSpace,
+            Padding(
+              padding: const EdgeInsets.only(right: 20),
+              //! app bar ------------------------------------------------------
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    ' بیشتر راجب خودتون بگید  ',
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  (MediaQuery.of(context).size.height * 0.013).verticalSpace,
+                  Text(
+                    'یک حساب کاربری بسازید و شروع کنید',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ],
               ),
             ),
-          ),
-            (MediaQuery.of(context).size.height * 0.05).verticalSpace,
-        
-           ],
+            (MediaQuery.of(context).size.height * 0.025).verticalSpace,
+            //! forms ------------------------------------------------------------
+            PrimaryTextBox(
+              controller: titleProductController,
+              iconPath: SvgPath.leadingAdornment,
+              title: "  عنوان محصول ",
+              hint: "عنوان محصول رو وارد کنید",
+            ),
+            8.0.verticalSpace,
+            TextFieldMaxLine(
+              title: 'توضیحاتی درباره ی محصول',
+              hint: 'مثلا جنسش چیه یا رنگبندی هاش چیه',
+              controller: descriptionProductController,
+            ),
+            30.0.h.verticalSpace,
+            //!image--------------------------
+           // PrimaryAvatar(
+            //  onTap:() async => await imageHandler
+              //                .pickAndCropImage(source: ImageSource.gallery),
+                              //.then((value) => setState(() {})),
+              //            file: imageHandler.getImage),
+             ImagePickerContainer(
+               onImageSelected: (image) {
+                setState(() {
+                  _selectedImage = image;
+                });
+              },
+             ),
+            //!button---------------------------------------
+             
+              Spacer(),
+            Align(
+              alignment: Alignment.center,
+              child: PrimaryButton(
+                isPrimaryColor: true,
+                action: () {
+                    final tempProduct = TempProduct(
+                  title: titleProductController.text,
+                  description: descriptionProductController.text,
+                  imgPath:  _selectedImage!.path ?? '',
+                );
+                   
+                context.pushNamed(
+                  "addproductstep2",
+                  extra: tempProduct,
+                );
+                },
+                child: Text(
+                  "ادامه ",
+                  style: Theme.of(context).textTheme.labelLarge,
+                ),
+              ),
+            ),
+              25.0.verticalSpace,
+          
+             ],
+        ),
       ),
     );
   }

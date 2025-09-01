@@ -7,11 +7,13 @@ import 'package:olgooproductform/config/asset/icons_path.dart';
 import 'package:olgooproductform/config/extentions/gap_space_extension.dart';
 import 'package:olgooproductform/core/dependency_injection/locator.dart';
 import 'package:olgooproductform/core/utils/preferences_oprator.dart';
-import 'package:olgooproductform/core/widgets/empty_state.widget%20copy.dart';
 import 'package:olgooproductform/core/widgets/primary_button.dart';
+import 'package:olgooproductform/feature/domain/product/usecase/product_usecase.dart';
 import 'package:olgooproductform/feature/presentation/product/bloc/product.bloc.dart';
 import 'package:olgooproductform/feature/presentation/product/bloc/product_status.dart';
 import 'package:size_config/size_config.dart';
+
+import '../../../../core/widgets/empty_state.widgetcopy.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -24,33 +26,36 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final PreferencesOperator preferencesOperator = PreferencesOperator(
     locator(),
   );
-  final ScrollController _scrollController = ScrollController();
+  ScrollController scrollController = ScrollController();
+
+  void setupScrollController(context) {
+    scrollController.addListener(() {
+      if (scrollController.position.atEdge) {
+        if (scrollController.position.pixels != 0) {
+          BlocProvider.of<ProductBloc>(
+            context,
+          ).add(LoadMoreProductsEvent(type: "همه"));
+        }
+      }
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+    setupScrollController(context);
+    _loadInitialProducts();
+  }
 
-    // 2️⃣ اضافه کردن listener به اسکرول
-    _scrollController.addListener(() {
-      if (_scrollController.position.atEdge &&
-          _scrollController.position.pixels != 0) {
-        // وقتی به انتهای لیست رسیدیم، محصولات بیشتر لود می‌کنه
-        BlocProvider.of<ProductBloc>(
-          context,
-        ).add(LoadMoreProductsEvent(type: "defaultCategory"));
-      }
-    });
-
-    // 3️⃣ بارگذاری اولیه محصولات
+  _loadInitialProducts() {
     BlocProvider.of<ProductBloc>(
       context,
-    ).add(LoadProductsFirstTimeEvent(type: "defaultCategory"));
+    ).add(LoadProductsFirstTimeEvent(type: "همه"));
   }
 
   @override
   void dispose() {
-    // فراموش نکن که ScrollController رو dispose کنی
-    _scrollController.dispose();
+    scrollController.dispose();
     super.dispose();
   }
 
@@ -63,24 +68,24 @@ class _DashboardScreenState extends State<DashboardScreen> {
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-
+        
             children: [
-                //UserInfoSection(user: preferencesOperator.getUserData()),
+              UserInfoSection(user: preferencesOperator.getUserData()),
               Divider(color: Theme.of(context).colorScheme.outline),
               DelayedWidget(
                 animationDuration: const Duration(milliseconds: 400),
                 delayDuration: const Duration(milliseconds: 800),
                 animation: DelayedAnimations.SLIDE_FROM_RIGHT,
-
+        
                 child: Center(
                   child: PrimaryButton(
                     isPrimaryColor: true,
                     action: () {
-                      context.pushNamed('/AddProductStep1');
+                      context.pushNamed("/addproductstep1");
                     },
                     child: Text(
                       textAlign: TextAlign.center,
-
+        
                       'ثبت محصول جدید',
                       style: TextStyle(color: Colors.white),
                     ),
@@ -88,59 +93,70 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
               ),
               30.0.verticalSpace,
-              BlocBuilder<ProductBloc, ProductState>(
+              BlocConsumer<ProductBloc, ProductState>(
+                listener: (context, state) {},
                 builder: (context, state) {
-                  if (state.status is LoadingProductStatus) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (state.status is FetchedProductStatus) {
-                    final products = state.products;
-                    return Expanded(
-                      child: GridView.builder(
-                        controller: _scrollController,
-                        itemCount: products.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 1,
-                              childAspectRatio: 0.8,
-                              mainAxisSpacing: 1,
-                            ),
-                        itemBuilder: (context, index) {
-                          final product = products[index];
-                          return ProductItem(
-                            productName: product.title,
-                            productPrice: product.price,
-                            productImage: product.imgPath,
-                            ontap: () {
-                              // رفتن به صفحه جزئیات محصول
+                  return BlocBuilder<ProductBloc, ProductState>(
+                    builder: (context, state) {
+                      if (state.status is LoadingProductStatus) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (state.status is FetchedProductStatus) {
+                        final products = state.products;
+                        return Expanded(
+                          child: GridView.builder(
+                            controller: scrollController,
+                            itemCount: products.length,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  crossAxisSpacing: 1,
+                                  childAspectRatio: 0.8,
+                                  mainAxisSpacing: 1,
+                                ),
+                            itemBuilder: (context, index) {
+                              final product = products[index];
+                              return ProductItem(
+                                productName: product.title,
+                                productPrice: product.price,
+                                productImage: product.imgPath,
+                                ontap: () {
+                                  // رفتن به صفحه جزئیات محصول
+                                },
+                              );
                             },
-                          );
-                        },
-                      ),
-                    );
-                  } else if (state.status is EmptyProductStatus) {
-                   return EmptyState(
-                    title: 'سفارشی یافت نشد',
-                    isError: false,
-                    action: () {
-                       context.pushNamed('/AddProductStep1');
-                      
+                          ),
+                        );
+                      } else if (state.status is EmptyProductStatus) {
+                        return EmptyState(
+                          title: 'سفارشی یافت نشد',
+                          isError: false,
+                          action: () {
+                            context.pushNamed("/addproductstep1");
+                          },
+                        );
+                      } else if (state.status is ErrorProductStatus) {
+                        var msg = (state.status as ErrorProductStatus).msg;
+                        return EmptyState(
+                          title: msg,
+                          isError: true,
+                          action: () {
+                            BlocProvider.of<ProductBloc>(
+                              context,
+                            ).add(LoadProductsFirstTimeEvent(type: "همه"));
+                          },
+                        );
+                      } else {
+                        return EmptyState(
+                          title:
+                              "مشکلی پیش اومده. اتصال اینترنت خود را بررسی کنید",
+                          isError: true,
+                          action: () => _loadInitialProducts(),
+                        );
+                      }
                     },
                   );
-                  } else if (state.status is ErrorProductStatus) {
-                     var msg = (state.status as ErrorProductStatus).msg;
-                  return EmptyState(
-                    title: msg,
-                     isError: true,
-                    action: () {
-                       BlocProvider.of<ProductBloc>(context).add(
-                            LoadProductsFirstTimeEvent(type: "defaultCategory"),
-                         );
-                    }
-                    );
-                  } else {
-                    return Container();
-                  }
                 },
               ),
             ],

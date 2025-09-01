@@ -4,14 +4,14 @@ import 'package:olgooproductform/feature/date/product/impl/product_impl_reposito
 import 'package:olgooproductform/feature/domain/product/entity/product_entity.dart';
 
 class ProductUseCase {
-  ProductRepositoryIMPL api= locator();
-
+  ProductRepositoryIMPL productRepository;
+   ProductUseCase({required this.productRepository});
   Future<DataState<List<ProductEntity>>> getAllProducts(
       {required int take, required int skip, String? type}) {
-    return api.getAllProducts(skip: skip, take: take, type: type);
+    return productRepository.getAllProducts(skip: skip, take: take, type: type);
   }
 
   Future<DataState<ProductEntity>> createProduct(dynamic productData) {
-    return api.createProduct(productData);
+    return productRepository.createProduct(productData);
   }
 }

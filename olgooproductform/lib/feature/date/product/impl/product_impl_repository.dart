@@ -9,11 +9,11 @@ import 'package:olgooproductform/feature/domain/product/entity/product_entity.da
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductRepositoryIMPL {
- final ProductApiProvider apiProvider = locator();
+ final ProductApiProvider apiProvider ;
  PreferencesOperator preferencesOperator =
       PreferencesOperator(locator<SharedPreferences>());
-   
-
+   ProductRepositoryIMPL({required this.apiProvider});
+ 
     Future<DataState<List<ProductEntity>>> getAllProducts({required int take , required int skip , String? type}) async {
     try {
       Response response = await apiProvider.getAllProducts(take:  take  ,skip:   skip ,type:   type);

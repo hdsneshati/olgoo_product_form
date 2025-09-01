@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:olgooproductform/config/asset/theme/color_pallet.dart';
+import 'package:olgooproductform/config/theme/color_pallet.dart';
 import 'package:toastification/toastification.dart';
 
 class SnackBars {

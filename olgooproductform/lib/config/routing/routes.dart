@@ -13,7 +13,7 @@ import 'package:olgooproductform/feature/presentation/product/screens/add_produc
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 final GoRouter routs =
-    GoRouter(navigatorKey: navigatorKey, initialLocation: "/addproductstep1", routes: [
+    GoRouter(navigatorKey: navigatorKey, initialLocation:"/login", routes: [
  
  
  GoRoute(
