@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:olgooproductform/config/asset/icons_path.dart';
+import 'package:olgooproductform/config/asset/svg_path.dart';
 import 'package:olgooproductform/config/extentions/gap_space_extension.dart';
 import 'package:olgooproductform/core/widgets/primary_button.dart';
 import 'package:olgooproductform/core/widgets/primary_textbox.dart';
@@ -10,20 +11,21 @@ import 'package:olgooproductform/core/widgets/snackbar.dart';
 import 'package:olgooproductform/core/widgets/textfield_maxline.widget.dart';
 import 'package:olgooproductform/feature/presentation/authentication/bloc/auth/auth.bloc.dart';
 import 'package:olgooproductform/feature/presentation/authentication/bloc/auth/auth_status.dart';
+import 'package:olgooproductform/feature/presentation/authentication/wigets/icon_picker.dart';
+import 'package:olgooproductform/feature/presentation/product/bloc/product.bloc.dart';
 
 class SignupDetailsScreen extends StatelessWidget {
   SignupDetailsScreen({
-   // required this.companyNameController,
+    // required this.companyNameController,
     //required this.ownerNameController,
-    
-    super.key});
- final TextEditingController phonenumberController = TextEditingController();
+    super.key,
+  });
+  final TextEditingController phonenumberController = TextEditingController();
   final TextEditingController instagramNameController = TextEditingController();
- final TextEditingController companyNameController = TextEditingController();
+  final TextEditingController companyNameController = TextEditingController();
   final TextEditingController ownerNameController = TextEditingController();
-  
+
   @override
-  
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -55,7 +57,7 @@ class SignupDetailsScreen extends StatelessWidget {
             //! forms ------------------------------------------------------------
             PrimaryTextBox(
               controller: phonenumberController,
-              iconPath: IconPath.company,
+              iconPath: SvgPath.leadingAdornment,
               title: "  شماره واتساپ (اگه دارید) ",
               hint: "شماره واتساپتون رو وارد کنید",
             ),
@@ -68,54 +70,34 @@ class SignupDetailsScreen extends StatelessWidget {
             ),
             8.0.verticalSpace,
             TextFieldMaxLine(
-                 title: 'توضیحاتی درباره ی محصول', 
-            hint: 'مثلا جنسش چیه یا رنگبندی هاش چیه',
-            controller: companyNameController,
-         
+              title: 'توضیحاتی درباره ی شما',
+              hint: '',
+              controller: companyNameController,
             ),
-             //! action button ----------------------------------------------
-                BlocConsumer<AuthBloc, AuthState>(
-                  listener: (context, state) {
-                    if (state.status is ErrorAuthStatus) {
-                      SnackBars.errorSnackBar(context, "یه مشکلی پیش اومده",
-                          (state.status as ErrorAuthStatus).errorMessage);
-                    } else if (state.status is SuccessRegisterUser) {
-                      context.goNamed("/dashboard");
-                    }
-                  },
-                  builder: (context, state) {
-                    return Center(
-                        child: PrimaryButton(
-                            action: () {
-                              if (state.status is! LoadingAuthStatus) {
-                                BlocProvider.of<AuthBloc>(context).add(
-                                    RegisterUserEvent(
-                                        username: ownerNameController.text,
-                                        companyName:
-                                            companyNameController.text)
-                                );
-                              }
-                            
-                            },
-                            isPrimaryColor: true,
-                            child: state.status is! LoadingAuthStatus
-                                ? Text(
-                                    "ادامه ",
-                                    style:
-                                        Theme.of(context).textTheme.labelLarge,
-                                  )
-                                : LoadingAnimationWidget.threeArchedCircle(
-                                    color:
-                                        Theme.of(context).colorScheme.onPrimary,
-                                    size: 30)));
-                  },
+            8.0.verticalSpace,
+            IconPicker(),
+            (MediaQuery.of(context).size.height * 0.11).verticalSpace,
+
+            //! action button ----------------------------------------------
+            Center(
+              child: PrimaryButton(
+                isPrimaryColor: true,
+                action: () {
+                  BlocProvider.of<ProductBloc>(
+                    context,
+                  ).add(LoadProductsFirstTimeEvent(type: "همه"));
+                  context.pushNamed("/dashboard");
+                },
+                child: Text(
+                  "ادامه ",
+                  style: Theme.of(context).textTheme.labelLarge,
                 ),
-                25.0.verticalSpace,
+              ),
+            ),
+            25.0.verticalSpace,
           ],
         ),
       ),
     );
   }
 }
-
-
