@@ -43,13 +43,13 @@ class MyApp extends StatelessWidget {
         return MaterialApp.router(
           routerConfig: routs,
           title: 'OLGOO',
-         // theme: lightThemeData,
+         theme: lightThemeData,
           locale: const Locale("fa", "IR"),
           supportedLocales: const [
             Locale("fa", "IR"),
             // Locale('en', 'US'),
           ],
-        // home: SignupDetailsScreen(),
+         //home: SignupDetailsScreen(),
           debugShowCheckedModeBanner: false,
           localizationsDelegates: const [
             PersianMaterialLocalizations.delegate,
