@@ -278,6 +278,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   },
                 ),
               ),
+              25.0.verticalSpace,
             ],
           ),
         ),
