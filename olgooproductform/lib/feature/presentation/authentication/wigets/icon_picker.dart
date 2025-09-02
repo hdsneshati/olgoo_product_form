@@ -62,72 +62,73 @@ class _IconPickerState extends State<IconPicker> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: GestureDetector(
-        onTap: _showPickOptionsDialog,
-        child: Container(
-          padding: const EdgeInsets.only(left: 8, right: 0, top: 2),
-          margin: const EdgeInsets.only(top: 8, right: 8, left: 8),
-          width: MediaQuery.of(context).size.width * 0.8,
-
-          height: 83.h,
-          child: Row(
-            children: [
-              _image == null
-                  ? Container(
-                      width: 90.w,
-                      height: 83.h,
-                      decoration: BoxDecoration(
-                        color: Color(0xffECECEC),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Stack(
-                        children: [
-                          Align(
-                            alignment: Alignment.center,
-                            child: SvgPicture.asset(
-                              SvgPath.profile,
-                              width: 53,
-                              height: 52,
-                            ),
-                          ),
-                          Positioned(
-                            bottom: 0,
-                            right: 0,
-                            child: Align(
-                              alignment: Alignment.bottomRight,
-                              child: SvgPicture.asset(
-                                SvgPath.editSquare,
-                                width: 18.5,
-                                height: 18.4,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  : ClipRRect(
+      child: Container(
+        padding: const EdgeInsets.only(left: 8, right: 0, top: 2),
+        margin: const EdgeInsets.only(top: 8, right: 8, left: 8),
+        width: MediaQuery.of(context).size.width * 0.8,
+      
+        height: 83.h,
+        child: Row(
+          children: [
+            _image == null
+                ? Container(
+                    width: 90.w,
+                    height: 83.h,
+                    decoration: BoxDecoration(
+                      color: Color(0xffECECEC),
                       borderRadius: BorderRadius.circular(10),
-                      child: kIsWeb
-                          ? Image.network(_image!.path, fit: BoxFit.cover)
-                          : Image.file(File(_image!.path), fit: BoxFit.cover),
                     ),
-
-              Padding(
-                padding: const EdgeInsets.all(3),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'تصویر لوگوی خود را بارگذاری کنید',
-                      style: TextStyle(
-                        fontFamily: "dana",
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.black,
-                      ),
+                    child: Stack(
+                      children: [
+                        Align(
+                          alignment: Alignment.center,
+                          child: SvgPicture.asset(
+                            SvgPath.profile,
+                            width: 53,
+                            height: 52,
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: Align(
+                            alignment: Alignment.bottomRight,
+                            child: SvgPicture.asset(
+                              SvgPath.editSquare,
+                              width: 18.5,
+                              height: 18.4,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    Container(
+                  )
+                : ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: kIsWeb
+                        ? Image.network(_image!.path, fit: BoxFit.cover)
+                        : Image.file(File(_image!.path), fit: BoxFit.cover),
+                  ),
+      
+            Padding(
+              padding: const EdgeInsets.all(3),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'تصویر لوگوی خود را بارگذاری کنید',
+                    style: TextStyle(
+                      fontFamily: "dana",
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                    ),
+                  ),
+                  GestureDetector(
+                    
+                      onTap: _showPickOptionsDialog,
+                    child: Container(
                      margin: EdgeInsets.only(right: 3),
                       width: 93.w,
                       height: 31.h,
@@ -147,11 +148,11 @@ class _IconPickerState extends State<IconPicker> {
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
